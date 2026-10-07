@@ -48,7 +48,7 @@ def menu():
         print('2 - Listar Estudantes')
         print('3 - Média da Turma')
         print('4 - Sair')
-        opcao = input('Escolha uma opção: ')
+        opcao = input('\nEscolha uma opção: ')
 
         if opcao == '1':
             cadastrar()
