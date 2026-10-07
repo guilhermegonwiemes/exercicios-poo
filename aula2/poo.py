@@ -4,7 +4,6 @@ class Estudante:
         self.nome = nome
         self.nota1 = nota1
         self.nota2 = nota2
-        estudantes.append(self)
 
     #função que calcula a media de cada estudante, chamada pela função situacao e listar
     def calcular_media(self):
@@ -20,25 +19,8 @@ class Estudante:
         else:
             return 'Reprovado'
 
-    # função que lista todos os estudantes cadastrados, chamada pelo menu
-    def listar():
-        if len(estudantes) == 0:
-            print('Nenhum estudante cadastrado.')
-            return
-        print(f'\n{'NOME':<16}{'N1':<7}{'N2':<7}{'MÉDIA':<8}{'SITUAÇÃO':<14}')
-        for estudante in estudantes:
-            print(f'{estudante.nome:<16}{estudante.nota1:<7}{estudante.nota2:<7}{estudante.calcular_media():<8.1f}{estudante.situacao():<14}')
-
-    # função que calcula a média da turma, chamada pelo menu
-    def media_turma():
-        if len(estudantes) == 0:
-            print('Nenhum estudante cadastrado.')
-            return
-
-        for estudante in estudantes:
-            soma = sum(estudante.calcular_media() for estudante in estudantes)
-            media = soma / len(estudantes)
-        print(f'\nMédia da turma: {media:.1f}')
+    def descrever(self):
+        return f'Nome: {self.nome}, Nota 1: {self.nota1}, Nota 2: {self.nota2}, Média: {self.calcular_media():.1f}, Situação: {self.situacao()}'
 
 # array de estudantes para usar quando precisar dar for em todos os estudantess
 estudantes = []
@@ -60,7 +42,27 @@ def cadastrar_estudante():
         except ValueError:
             print('\n\33[31mErro: Por favor, insira valores numéricos válidos para as notas.\33[m')
             continue
-    Estudante(nome, nota1, nota2)
+    estudantes.append(Estudante(nome, nota1, nota2))
+
+# função que lista todos os estudantes cadastrados, chamada pelo menu
+def listar():
+    if len(estudantes) == 0:
+        print('Nenhum estudante cadastrado.')
+        return
+    print(f'\n{'NOME':<16}{'N1':<7}{'N2':<7}{'MÉDIA':<8}{'SITUAÇÃO':<14}')
+    for estudante in estudantes:
+        print(f'{estudante.descrever()}')
+
+# função que calcula a média da turma, chamada pelo menu
+def media_turma():
+    if len(estudantes) == 0:
+        print('Nenhum estudante cadastrado.')
+        return
+
+    for estudante in estudantes:
+        soma = sum(estudante.calcular_media() for estudante in estudantes)
+        media = soma / len(estudantes)
+    print(f'\nMédia da turma: {media:.1f}')
 
 #função que chama o menu e inicia o programa
 def menu():
@@ -75,9 +77,9 @@ def menu():
             case '1':
                 cadastrar_estudante()
             case '2':
-                Estudante.listar()
+                listar()
             case '3':
-                Estudante.media_turma()
+                media_turma()
             case '4':
                 print('Saindo...')
                 break
